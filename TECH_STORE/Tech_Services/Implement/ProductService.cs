@@ -22,7 +22,8 @@ namespace Tech_Services.Implement
             }
         }
 
-        
+        public List<Product> SearchByName(string name) => _productRepo.SearchByName(name);
+
         public bool Create(Product product) => _productRepo.Create(product);
 
         public bool Delete(Product product) => _productRepo.Delete(product);

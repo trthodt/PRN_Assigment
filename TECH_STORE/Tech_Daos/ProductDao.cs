@@ -30,6 +30,8 @@ namespace Tech_Daos
             _context = new PRN221_ASSIGNMENTContext();
         }
 
+        public List<Product> SearchByName(string name) => _context.Products.Include(x => x.Category).Where(x => x.ProductName.ToLower().Contains(name.ToLower())).ToList();
+
         public List<Product> GetProducts() => _context.Products.Include(x => x.Category).ToList();
 
         public Product? GetProduct(int id) => _context.Products.Include(x => x.Category).FirstOrDefault(x => x.Id == id);

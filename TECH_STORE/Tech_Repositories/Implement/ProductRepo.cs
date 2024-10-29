@@ -11,6 +11,7 @@ namespace Tech_Repositories.Implement
 {
     public class ProductRepo : IProductRepo
     {
+        public List<Product> SearchByName(string name) => ProductDao.Instance.SearchByName(name);
         public bool Create(Product product) => ProductDao.Instance.Create(product);
 
         public bool Delete(Product product) => ProductDao.Instance.Delete(product);

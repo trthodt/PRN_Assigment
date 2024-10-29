@@ -10,6 +10,7 @@ namespace Tech_Repositories.Interface
 {
     public interface IProductRepo
     {
+        public List<Product> SearchByName(string name);
         public List<Product> GetProducts();
 
         public Product? GetProduct(int id);

@@ -10,6 +10,7 @@ namespace Tech_Services.Interface
 {
     public interface IProductService
     {
+        public List<Product> SearchByName(string name);
         public List<Product> GetProducts();
 
         public Product? GetProduct(int id);

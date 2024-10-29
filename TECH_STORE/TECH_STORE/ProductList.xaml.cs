@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -75,6 +76,14 @@ namespace TECH_STORE
 
         private Product GetProductInfo()
         {
+            if (string.IsNullOrEmpty(txtPrice.Text))
+            {
+                txtPrice.Text = "0";
+            }
+            if (string.IsNullOrEmpty(txtQuantity.Text))
+            {
+                txtQuantity.Text = "0";
+            }
             Product product = new Product()
             {
                 ProductName = txtProductName.Text,
@@ -98,6 +107,15 @@ namespace TECH_STORE
             
         }
 
+        public void ClearInfo()
+        {
+            txtProductName.Text = "";
+            txtPrice.Text = "";
+            txtQuantity.Text = "";
+            txtDescription.Text = "";
+            cbCategory.SelectedIndex = 0;
+        }
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -105,6 +123,7 @@ namespace TECH_STORE
                 Product product = GetProductInfo();
                 _productService.Create(product);
                 LoadProduct();
+                ClearInfo();
             }
             catch { }
 
@@ -112,10 +131,18 @@ namespace TECH_STORE
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Product product = GetProductInfo();
-            product.Id = chosenProduct.Id;
-            _productService.Update(product);
-            LoadProduct();
+            if (chosenProduct != null)
+            {
+                Product product = GetProductInfo();
+                product.Id = chosenProduct.Id;
+                _productService.Update(product);
+                LoadProduct();
+                chosenProduct = null;
+                ClearInfo();
+            } else
+            {
+                MessageBox.Show("Please choose a product to update!");
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -129,6 +156,20 @@ namespace TECH_STORE
             if (result == MessageBoxResult.Yes) { 
                 _productService.Delete(chosenProduct);
                 LoadProduct();
+                chosenProduct = null;
+                ClearInfo();
+            }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string search = txtSearch.Text;
+            if (string.IsNullOrEmpty(search)) { 
+                LoadProduct();
+            } else
+            {
+                var listProduct = _productService.SearchByName(search);
+                dtgProductList.ItemsSource = listProduct;
             }
         }
     }
