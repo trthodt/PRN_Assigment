@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tech_BussinessObjects;
 using Tech_Services.Implement;
 using Tech_Services.Interface;
 
@@ -23,20 +26,110 @@ namespace TECH_STORE
     public partial class ProductList : Page
     {
         private IProductService _productService;
+        private Product chosenProduct = null;
+        List<Category> categories = new List<Category>
+        {
+            new Category { Id = 1, CategoryName = "Electronics" },
+            new Category { Id = 2, CategoryName = "Home Appliances" },
+            new Category { Id = 3, CategoryName = "Computers & Accessories" },
+            new Category { Id = 4, CategoryName = "Smart Devices" },
+            new Category { Id = 5, CategoryName = "Gaming" }
+        };
         public ProductList()
         {
             InitializeComponent();
             _productService = new ProductService();
+            cbCategory.ItemsSource = categories;
+            cbCategory.SelectedIndex = 0;
+            cbCategory.DisplayMemberPath = "CategoryName";
         }
 
         private void LoadProduct()
         {
-            dtgProductList.ItemsSource = _productService.GetProducts();
+            var productList =  _productService.GetProducts();
+
+            dtgProductList.ItemsSource = productList;
         }
 
         private void pgProductList_Loaded(object sender, RoutedEventArgs e)
         {
             LoadProduct();
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void SetProductInfo(Product product)
+        {
+            if (product == null) {
+                return;
+            }
+            txtProductName.Text = product.ProductName;
+            txtPrice.Text = product.Price.ToString();
+            txtQuantity.Text = product.Quantity.ToString();
+            txtDescription.Text = product.Description;
+            cbCategory.SelectedIndex = (int)product.CategoryId;
+        }
+
+        private Product GetProductInfo()
+        {
+            Product product = new Product()
+            {
+                ProductName = txtProductName.Text,
+                Description = txtDescription.Text,
+                Price = decimal.Parse(txtPrice.Text),
+                Quantity = int.Parse(txtQuantity.Text),
+                CategoryId = cbCategory.SelectedIndex,
+                CreatedAt = DateTime.Now
+            };
+            return product;
+        }
+
+        private void dtgProductList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                chosenProduct = (Product) dtgProductList.SelectedItem;
+                SetProductInfo(chosenProduct);
+            }
+            catch { }
+            
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Product product = GetProductInfo();
+                _productService.Create(product);
+                LoadProduct();
+            }
+            catch { }
+
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Product product = GetProductInfo();
+            product.Id = chosenProduct.Id;
+            _productService.Update(product);
+            LoadProduct();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (chosenProduct == null)
+            {
+                MessageBox.Show("Please choose a item to delete!");
+                return;
+            }
+            var result = MessageBox.Show("Are you sure to delete " +  chosenProduct.ProductName + "?","Delete",MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes) { 
+                _productService.Delete(chosenProduct);
+                LoadProduct();
+            }
         }
     }
 }

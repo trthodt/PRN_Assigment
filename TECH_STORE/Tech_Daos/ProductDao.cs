@@ -74,6 +74,7 @@ namespace Tech_Daos
                 productToUpdate.Description = product.Description;
                 productToUpdate.CategoryId = product.CategoryId;
                 productToUpdate.ProductName = product.ProductName;
+                productToUpdate.Quantity = product.Quantity;
                 _context.Products.Update(productToUpdate);
                 var result = _context.SaveChanges();
                 return result > 0;

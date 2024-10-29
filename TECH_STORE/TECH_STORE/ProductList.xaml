@@ -8,7 +8,23 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProductList" Loaded="pgProductList_Loaded">
 
-    <Grid>
-        <DataGrid x:Name="dtgProductList" HorizontalAlignment="Center" Height="222" VerticalAlignment="Center" Width="640" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+    <Grid Background="White">
+        <DataGrid x:Name="dtgProductList" HorizontalAlignment="Left" Height="222" VerticalAlignment="Top" Width="390" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,0,0" SelectionChanged="dtgProductList_SelectionChanged"/>
+        <Label Content="Product Infomation" HorizontalAlignment="Left" Margin="523,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="429,54,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price" HorizontalAlignment="Left" Margin="429,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtProductName" HorizontalAlignment="Left" Margin="523,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253"/>
+        <Label Content="Category" HorizontalAlignment="Left" Margin="430,106,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description" HorizontalAlignment="Left" Margin="430,141,0,0" VerticalAlignment="Top"/>
+        <Label Content=" Created Time" HorizontalAlignment="Left" Margin="429,236,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="523,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox x:Name="txtDescription" HorizontalAlignment="Left" Margin="524,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253" Height="80"/>
+        <TextBox x:Name="txtTime" HorizontalAlignment="Left" Margin="523,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="253"/>
+        <Label Content="Quantity" HorizontalAlignment="Left" Margin="623,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Margin="717,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="59"/>
+        <ComboBox x:Name="cbCategory" HorizontalAlignment="Left" Margin="524,110,0,0" VerticalAlignment="Top" Width="253"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="22" Margin="526,274,0,0" VerticalAlignment="Top" Width="80" Click="btnAdd_Click"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Height="22" Margin="610,274,0,0" VerticalAlignment="Top" Width="82" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Height="22" Margin="696,274,0,0" VerticalAlignment="Top" Width="80" Click="btnDelete_Click"/>
     </Grid>
 </Page>
