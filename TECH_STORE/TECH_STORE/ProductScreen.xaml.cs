@@ -32,5 +32,10 @@ namespace TECH_STORE
         {
             Main.Content = new ProductList();
         }
+
+        private void btnOrder_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new OrderPage();
+        }
     }
 }
