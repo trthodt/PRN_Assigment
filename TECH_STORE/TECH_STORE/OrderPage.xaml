@@ -5,15 +5,41 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TECH_STORE"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="300" d:DesignWidth="760"
       Title="OrderPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#3A8DFF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#888" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid Background="White">
-        <DataGrid x:Name="dtgOrder" HorizontalAlignment="Left" Height="137" Margin="10,66,0,0" VerticalAlignment="Top" Width="413" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="dtgOrder_SelectionChanged"/>
-        <Button x:Name="btnPrev" Content="Prev" HorizontalAlignment="Left" Height="20" Margin="258,271,0,0" VerticalAlignment="Top" Width="69" Click="btnPrev_Click"/>
-        <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Height="20" Margin="353,271,0,0" VerticalAlignment="Top" Width="70" Click="btnNext_Click"/>
-        <Label x:Name="lblPage" Content="1" HorizontalAlignment="Left" Margin="332,268,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.548,0.527"/>
-        <DataGrid x:Name="dtgOrderDetail" HorizontalAlignment="Left" Height="259" Margin="441,66,0,0" VerticalAlignment="Top" Width="306" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-
+        <DataGrid x:Name="dtgOrder" ColumnWidth="*" Background="White" Foreground="#333333" HorizontalAlignment="Left" Height="150" Margin="12,10,0,0" VerticalAlignment="Top" Width="376" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="dtgOrder_SelectionChanged"/>
+        <Button x:Name="btnPrev" Content="Prev" HorizontalAlignment="Left" Height="20" Margin="238,228,0,0" VerticalAlignment="Top" Width="62" Click="btnPrev_Click"/>
+        <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Height="20" Margin="324,228,0,0" VerticalAlignment="Top" Width="64" Click="btnNext_Click"/>
+        <Label x:Name="lblPage" Content="1" HorizontalAlignment="Left" Margin="305,225,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.548,0.527" Width="15"/>
+        <DataGrid x:Name="dtgOrderDetail" ColumnWidth="*" Background="White" Foreground="#333333" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="259" Margin="412,10,0,0" VerticalAlignment="Top" Width="328" d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>
 </Page>

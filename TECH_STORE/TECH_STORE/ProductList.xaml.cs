@@ -41,13 +41,56 @@ namespace TECH_STORE
             InitializeComponent();
             _productService = new ProductService();
             cbCategory.ItemsSource = categories;
-            cbCategory.SelectedIndex = 0;
+            cbCategory.SelectedValuePath = "Id";
             cbCategory.DisplayMemberPath = "CategoryName";
         }
 
         private void LoadProduct()
         {
-            var productList =  _productService.GetProducts();
+            var productList = _productService.GetProducts();
+            dtgProductList.Columns.Clear();
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "ID",
+                Binding = new Binding("Id")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Product Name",
+                Binding = new Binding("ProductName")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Description",
+                Binding = new Binding("Description")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Price",
+                Binding = new Binding("Price")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Quantity",
+                Binding = new Binding("Quantity")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Created At",
+                Binding = new Binding("CreatedAt")
+            });
+
+            dtgProductList.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Category",
+                Binding = new Binding("Category.CategoryName")
+            });
 
             dtgProductList.ItemsSource = productList;
         }
@@ -71,7 +114,7 @@ namespace TECH_STORE
             txtPrice.Text = product.Price.ToString();
             txtQuantity.Text = product.Quantity.ToString();
             txtDescription.Text = product.Description;
-            cbCategory.SelectedIndex = (int)product.CategoryId;
+            cbCategory.SelectedValue = product.CategoryId;
         }
 
         private Product GetProductInfo()
@@ -90,7 +133,7 @@ namespace TECH_STORE
                 Description = txtDescription.Text,
                 Price = decimal.Parse(txtPrice.Text),
                 Quantity = int.Parse(txtQuantity.Text),
-                CategoryId = cbCategory.SelectedIndex,
+                CategoryId = (int) cbCategory.SelectedValue,
                 CreatedAt = DateTime.Now
             };
             return product;
@@ -147,18 +190,26 @@ namespace TECH_STORE
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (chosenProduct == null)
+            try
             {
-                MessageBox.Show("Please choose a item to delete!");
-                return;
+                if (chosenProduct == null)
+                {
+                    MessageBox.Show("Please choose a item to delete!");
+                    return;
+                }
+                var result = MessageBox.Show("Are you sure to delete " + chosenProduct.ProductName + "?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    bool res = _productService.Delete(chosenProduct);
+                    LoadProduct();
+                    chosenProduct = null;
+                    ClearInfo();
+                }
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.ToString());
             }
-            var result = MessageBox.Show("Are you sure to delete " +  chosenProduct.ProductName + "?","Delete",MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes) { 
-                _productService.Delete(chosenProduct);
-                LoadProduct();
-                chosenProduct = null;
-                ClearInfo();
-            }
+            
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

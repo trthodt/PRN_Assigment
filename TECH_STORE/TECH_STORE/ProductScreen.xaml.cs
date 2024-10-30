@@ -25,6 +25,7 @@ namespace TECH_STORE
         public ProductScreen()
         {
             InitializeComponent();
+            Main.Content = new ProductList();
         }
 
 
