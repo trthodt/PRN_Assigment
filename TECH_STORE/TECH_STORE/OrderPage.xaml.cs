@@ -27,7 +27,7 @@ namespace TECH_STORE
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
         private int page = 1;
-        private int pageSize = 1;
+        private int pageSize = 5;
         private Order chosenOrder = null;
         public OrderPage()
         {

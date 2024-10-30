@@ -82,12 +82,6 @@ namespace TECH_STORE
 
             dtgProductList.Columns.Add(new DataGridTextColumn
             {
-                Header = "Created At",
-                Binding = new Binding("CreatedAt")
-            });
-
-            dtgProductList.Columns.Add(new DataGridTextColumn
-            {
                 Header = "Category",
                 Binding = new Binding("Category.CategoryName")
             });

@@ -43,8 +43,16 @@ namespace TECH_STORE
                 return;
             }
             if (user.Password.Equals(password)) {
-                ProductScreen screen = new ProductScreen();
-                screen.Show();
+                if (user.Role.Equals("admin")) {
+                    ProductScreen screen = new ProductScreen();
+                    screen.Show();
+                    this.Hide();
+                } else
+                {
+                    MessageBox.Show("You don't have permission to access this application!");
+                }
+                
+                
             } else
             {
                 MessageBox.Show("Wrong password");

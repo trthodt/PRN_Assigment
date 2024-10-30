@@ -37,9 +37,9 @@
 
     <Grid Background="White">
         <DataGrid x:Name="dtgOrder" ColumnWidth="*" Background="White" Foreground="#333333" HorizontalAlignment="Left" Height="150" Margin="12,10,0,0" VerticalAlignment="Top" Width="376" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="dtgOrder_SelectionChanged"/>
-        <Button x:Name="btnPrev" Content="Prev" HorizontalAlignment="Left" Height="20" Margin="238,228,0,0" VerticalAlignment="Top" Width="62" Click="btnPrev_Click"/>
+        <Button x:Name="btnPrev" Content="Prev" HorizontalAlignment="Left" Height="20" Margin="228,228,0,0" VerticalAlignment="Top" Width="62" Click="btnPrev_Click"/>
         <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Height="20" Margin="324,228,0,0" VerticalAlignment="Top" Width="64" Click="btnNext_Click"/>
-        <Label x:Name="lblPage" Content="1" HorizontalAlignment="Left" Margin="305,225,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.548,0.527" Width="15"/>
+        <Label x:Name="lblPage" Content="1" HorizontalAlignment="Left" Margin="299,225,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.548,0.527" Width="15" FontWeight="Bold"/>
         <DataGrid x:Name="dtgOrderDetail" ColumnWidth="*" Background="White" Foreground="#333333" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="259" Margin="412,10,0,0" VerticalAlignment="Top" Width="328" d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>
 </Page>
